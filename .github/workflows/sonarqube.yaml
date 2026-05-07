@@ -19,11 +19,10 @@ jobs:
           java-version: 17
  
       - name: Build and test with Maven
-        run: mvn clean verify
+        run: mvn clean verify -B --no-transfer-progress
  
       - name: Run SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn sonar:sonar \
-          -Dsonar.projectKey=spring-petclinic
+        run: mvn -B sonar:sonar  -Dsonar.projectKey=spring-petclinic -Dsonar.projectName='spring-petclinic'
