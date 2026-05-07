@@ -24,5 +24,5 @@ jobs:
       - name: Run SonarQube analysis
         run: mvn sonar:sonar \
           -Dsonar.projectKey=YourProjectKey \
-          -Dsonar.host.url=${{ vars.SONAR_HOST_URL }} \
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
