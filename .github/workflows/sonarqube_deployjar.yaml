@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: spring-petclinic-jar
-          path: target/spring-petclinic.jar
+          path: target/spring-petclinic-*.jar
 
 ### The deployment starts here
 
@@ -60,7 +60,7 @@ jobs:
         run: ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "fuser -k 8080/tcp || true"
  
       - name: Copy JAR to EC2
-        run: scp -o StrictHostKeyChecking=no target/spring-petclinic.jar ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/
+        run: scp -o StrictHostKeyChecking=no target/spring-petclinic-*.jar ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/
  
       - name: Ensure Java is installed on remote
         run: ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} \
@@ -68,4 +68,4 @@ jobs:
  
       - name: Start Spring PetClinic
         run: ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} \
-          "nohup java -jar /home/ubuntu/spring-petclinic.jar > /dev/null 2>&1 &"
+          "nohup java -jar /home/ubuntu/spring-petclinic-*.jar > /dev/null 2>&1 &"
